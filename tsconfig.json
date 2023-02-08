@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Feed.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Feed.js", "components/Input.js"],
   "exclude": ["node_modules"]
 }
