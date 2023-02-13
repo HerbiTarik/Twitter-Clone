@@ -1,38 +1,16 @@
 import { SparklesIcon } from "@heroicons/react/24/outline";
 import Input from "./Input";
 import Post from "./Post";
+import { useState, useEffect } from 'react';
+import { onSnapshot, query, collection, orderBy } from "firebase/firestore";
+import { db } from "@/firebase";
 
 export default function Feed() {
-  const posts = [
-    {
-      id: "1",
-      name: "Tarik Herbi",
-      username: "clone-tiwitter",
-      userImg: "https://images.unsplash.com/photo-1551617489-25aa9b1053c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHJhZ29uJTIwYmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
-      img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bmF0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60",
-      text: "nice view!",
-      timestamp: "2 hours ago"
-    },
-    {
-      id: "2",
-      name: "Tarik Herbi",
-      username: "clone-tiwitter",
-      userImg: "https://images.unsplash.com/photo-1551617489-25aa9b1053c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHJhZ29uJTIwYmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
-      img: "https://images.unsplash.com/photo-1675789358578-870c3b20d907?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=400&q=60",
-      text: "wow",
-      timestamp: "2 days ago"
-    },
-   
-    {
-      id: "3",
-      name: "Tarik Herbi",
-      username: "clone-tiwitter",
-      userImg: "https://images.unsplash.com/photo-1551617489-25aa9b1053c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8ZHJhZ29uJTIwYmFsbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
-      img: " https://images.unsplash.com/photo-1604537466158-719b1972feb8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxzZWFyY2h8MXx8bmF0dXJlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1200&q=60",
-      text: "it is beautiful ",
-      timestamp: "3 days ago"
-    },
-  ]
+  const [posts,setPosts] = useState([]);
+
+  useEffect(() => 
+   onSnapshot(query(collection(db, "posts"), orderBy('timestamp', 'desc')), (snapshot) => {setPosts(snapshot.docs)}
+   ), [])
   return (
     <div className="xl:ml-[370px] border-l border-r border-gray-200 xl:min-w-[620px] lg:min-w-[620px] md:min-w-[620px] sm:ml-[73px] flex-grow max-w-xl">
       <div className="sticky top-0 z-50 flex px-3 py-2 bg-white border-b border-gray-200">

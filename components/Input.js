@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import {db, storage} from "../firebase";
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from 'firebase/firestore';
 import { getDownloadURL, uploadString, ref  } from 'firebase/storage';
-
+import Image from 'next/image';
 
 export default function Input() {
   const {data: session} = useSession();
@@ -55,12 +55,12 @@ export default function Input() {
   return (
     <>
     {session && (
-      <div className='flex border-b border-gray-200 p-3 space-x-3 '>
+      <div className='flex p-3 space-x-3 border-b border-gray-200 '>
       <img
       onClick={signOut}
       src={session.user.image}
       alt="picture of tarik"
-      className='h-11 w-11 rounded-full cursor-pointer hover:brightness-95'
+      className='rounded-full cursor-pointer h-11 w-11 hover:brightness-95'
       />
       <div className="w-full divide-y divide-gray-200">
       <div className="">
@@ -68,7 +68,7 @@ export default function Input() {
         </div>
         {selectedFile && (
           <div className="relative">
-            <XMarkIcon className='h-7 text-black absolute cursor-pointer shadow-md shadow-white rounded-full' onClick={() => setSelectedFile(null)}/>
+            <XMarkIcon className='absolute m-1 text-black border border-white rounded-full shadow-md cursor-pointer h-7' onClick={() => setSelectedFile(null)}/>
             <img src={selectedFile} className={`${loading && "animate-pulse"}`} />
           </div>
         )}
@@ -77,10 +77,10 @@ export default function Input() {
           <>
           <div className="flex">
           <div className="" onClick={() => filePickerRef.current.click()}>
-          <PhotoIcon className='h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100'/>
+          <PhotoIcon className='w-10 h-10 p-2 hoverEffect text-sky-500 hover:bg-sky-100'/>
           <input type="file" hidden ref={filePickerRef} onChange={addImageToPost} />
           </div>
-            <FaceSmileIcon className='h-10 w-10 hoverEffect p-2 text-sky-500 hover:bg-sky-100'/>
+            <FaceSmileIcon className='w-10 h-10 p-2 hoverEffect text-sky-500 hover:bg-sky-100'/>
           </div>
           <button onClick={sendPost} disabled={!input.trim()} className='bg-blue-400 text-white px-4 py-1.5 rounded-full font-bold shadow-md hover:brightness-95 disabled:opacity-50'>Tweet</button>
         
