@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import {db, storage} from "../firebase";
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from 'firebase/firestore';
 import { getDownloadURL, uploadString, ref  } from 'firebase/storage';
-import Image from 'next/image';
+
 
 export default function Input() {
   const {data: session} = useSession();
