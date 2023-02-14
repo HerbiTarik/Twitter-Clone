@@ -6,7 +6,6 @@ import {signIn, useSession} from "next-auth/react"
 import { useState, useEffect } from "react";
 import { onSnapshot, collection, deleteDoc } from "firebase/firestore";
 import { HeartIcon as HeartIconFiled} from "@heroicons/react/24/solid";
-import {Image} from "next/image"
 import { deleteObject, ref } from "firebase/storage";
 
 export default function Post({post}) {
@@ -42,7 +41,10 @@ export default function Post({post}) {
 async function deletePost(){
   if(window.confirm("Are you sure you want to delete this post?")){
     deleteDoc(doc(db, "posts", post.id));
-    deleteObject(ref(storage, `posts/${post.id}/image`));
+    if (post.data().image){
+
+      deleteObject(ref(storage, `posts/${post.id}/image`));
+    }
   }
   
 }
