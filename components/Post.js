@@ -8,13 +8,14 @@ import { onSnapshot, collection, deleteDoc } from "firebase/firestore";
 import { HeartIcon as HeartIconFiled} from "@heroicons/react/24/solid";
 import { deleteObject, ref } from "firebase/storage";
 import {useRecoilState} from 'recoil'
-import { modalState } from "@/atom/ModalAtom";
+import { modalState, postIdState } from "@/atom/ModalAtom";
 
 export default function Post({post}) {
   const {data: session} = useSession();
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
   const [open, setOpen] = useRecoilState(modalState);
+  const [postId, setPostId] = useRecoilState(postIdState);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -82,7 +83,17 @@ async function deletePost(){
 
           {/*icons*/}
           <div className="flex justify-between p-2 text-gray-500">
-          <ChatBubbleOvalLeftEllipsisIcon onClick={() => setOpen(!open)} className="p-2 h-9 w-9 hoverEffect hover:text-sky-500 hover:bg-sky-100"/>
+      
+          <ChatBubbleOvalLeftEllipsisIcon onClick={() => {
+            if(!session){
+              signIn();
+            }else{
+              setPostId(post.id);  
+              setOpen(!open);
+            }
+
+          }} 
+          className="p-2 h-9 w-9 hoverEffect hover:text-sky-500 hover:bg-sky-100"/>
 
           {session?.user.uid === post?.data().id &&
             <TrashIcon onClick={deletePost} className="p-2 h-9 w-9 hoverEffect hover:text-red-600 hover:bg-red-100"/>
