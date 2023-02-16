@@ -16,6 +16,7 @@ export default function Post({post}) {
   const [hasLiked, setHasLiked] = useState(false);
   const [open, setOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -23,6 +24,13 @@ export default function Post({post}) {
       setLikes(snapshot.docs)
     )
   }, [db]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "posts", post.id, "comments"), (snapshot) => 
+     setComments(snapshot.docs))
+
+  }, [db]);
+
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like) => like.id === session?.user.uid) !== -1)
@@ -57,7 +65,7 @@ async function deletePost(){
       {/* user image */}
       <img src={post.data().userImg} alt="user-img" className="mr-4 rounded-full h-11 w-11"/>
       {/* right side */}
-        <div className="w-full">
+        <div className="flex-1">
           {/* header */}
             <div className="flex items-center justify-between">
               {/* post user info */}
@@ -83,7 +91,7 @@ async function deletePost(){
 
           {/*icons*/}
           <div className="flex justify-between p-2 text-gray-500">
-      
+          <div className="flex items-center select-none">
           <ChatBubbleOvalLeftEllipsisIcon onClick={() => {
             if(!session){
               signIn();
@@ -94,7 +102,11 @@ async function deletePost(){
 
           }} 
           className="p-2 h-9 w-9 hoverEffect hover:text-sky-500 hover:bg-sky-100"/>
-
+          {comments.length > 0 && (
+            <span className="text-sm">{comments.length}</span>
+          )}
+          </div>
+          
           {session?.user.uid === post?.data().id &&
             <TrashIcon onClick={deletePost} className="p-2 h-9 w-9 hoverEffect hover:text-red-600 hover:bg-red-100"/>
           }

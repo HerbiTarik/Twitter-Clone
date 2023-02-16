@@ -13,6 +13,7 @@ export default function Input() {
   const filePickerRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
+
   const addImageToPost = (e) => {
     const reader = new FileReader();
     if (e.target.files[0]){
