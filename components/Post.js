@@ -86,10 +86,10 @@ async function deletePost(){
             </div>
 
           {/*post text*/}
-          <p className="text-gray-800 text-[15px] sm:text-[16px] mb-2">{post?.data()?.text}</p>
+          <p onClick={() => router.push(`/posts/${id}`)} className="text-gray-800 text-[15px] sm:text-[16px] mb-2">{post?.data()?.text}</p>
 
           {/*post image*/}
-          <img className="w-full rounded-2xl" src={post?.data()?.image} alt="" />
+          <img onClick={() => router.push(`/posts/${id}`)} className="w-full rounded-2xl" src={post?.data()?.image} alt="" />
 
           {/*icons*/}
           <div className="flex justify-between p-2 text-gray-500">
