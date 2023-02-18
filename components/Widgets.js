@@ -18,7 +18,7 @@ export default function Widgets({newsResults, randomUserResults}) {
             </div>
         </div>
         <div className="xl:w-[70%] lg:w-[90%] space-y-3 text-gray-700 bg-gray-100 rounded-xl pt-2">
-                <h4 className="px-4 text-xl font-bold">What s happening</h4>
+                <h4 className="px-4 text-xl font-bold">Whats happening</h4>
                 <AnimatePresence>
                 {newsResults.slice(0,articleNum).map((article) => (
                   <motion.div key={article.title} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}} transition={{ duration: 1}}>
